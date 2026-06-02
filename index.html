@@ -57,50 +57,114 @@ body{
     transform:translateY(-2px);
 }
 
-.station{
-    background:#4f7cff;
+.station{background:#4f7cff;}
+.cafe{background:#22c55e;}
+.legend{background:#ff3b30;}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
 }
 
-.cafe{
-    background:#22c55e;
+.modal-box{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    width:300px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
 }
 
-.legend{
+.modal-box p{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.modal-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.modal-buttons button{
+    flex:1;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.modal-buttons button:first-child{
     background:#ff3b30;
+    color:white;
+}
+
+.modal-buttons button:last-child{
+    background:#e5e7eb;
 }
 </style>
 </head>
 <body>
 
 <div class="profile">
-
     <img src="ogu.png" alt="오구">
-
     <div class="name">오구</div>
 
     <div class="btn-group">
+        <a class="link-btn station" href="https://www.sooplive.com/station/been11060" target="_blank">방송국</a>
 
-        <a class="link-btn station"
-           href="https://www.sooplive.com/station/been11060"
-           target="_blank">
-            방송국
-        </a>
+        <a class="link-btn cafe" href="https://cafe.naver.com/59warts" target="_blank">카페</a>
 
-        <a class="link-btn cafe"
-           href="https://cafe.naver.com/59warts"
-           target="_blank">
-            카페
-        </a>
-
-        <a class="link-btn legend"
-           href="https://vod.sooplive.com/player/197290767/catch"
-           target="_blank">
-            🚫클릭금지🚫
-        </a>
-
+        <a class="link-btn legend" href="#" onclick="startConfirm(event)">🚫클릭금지🚫</a>
     </div>
-
 </div>
+
+<div id="confirmModal" class="modal">
+    <div class="modal-box">
+        <p id="modalText">진짜 누르시겠습니까?</p>
+
+        <div class="modal-buttons">
+            <button onclick="confirmYes()">네</button>
+            <button onclick="closeModal()">아니오</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let step = 1;
+
+function startConfirm(e){
+    e.preventDefault();
+    step = 1;
+    document.getElementById("modalText").innerText = "진짜 누르시겠습니까?";
+    document.getElementById("confirmModal").style.display = "flex";
+}
+
+function confirmYes(){
+    if(step === 1){
+        step = 2;
+        document.getElementById("modalText").innerText = "진짜 진짜 누르시겠습니까?";
+        return;
+    }
+
+    window.open(
+        "https://vod.sooplive.com/player/197290767/catch",
+        "_blank"
+    );
+
+    closeModal();
+}
+
+function closeModal(){
+    document.getElementById("confirmModal").style.display = "none";
+}
+</script>
 
 </body>
 </html>
